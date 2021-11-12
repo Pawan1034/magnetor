@@ -1,23 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import GetMovies from './GetMovies';
+import { useState } from 'react';
 
 function App() {
+  const [searchTerm,setSearchTerm ]= useState('')
+  const [showMovies,setShowMovies ]= useState(false)
+  console.log(showMovies,searchTerm)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" placeholder="Enter the movie name" value={searchTerm} onChange={(e)=>{
+        setSearchTerm(e.target.value)
+        setShowMovies(false)
+        }}/>
+      <button onClick={()=>{
+        setSearchTerm(searchTerm)
+        setShowMovies(true)
+        }}>Search</button>
+      {showMovies?<GetMovies searchTerm={searchTerm}/>:<></>}
     </div>
   );
 }
