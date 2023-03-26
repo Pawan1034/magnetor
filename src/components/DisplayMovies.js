@@ -1,7 +1,5 @@
 import { useState } from "react";
 import Player from "./Player";
-import webtor from "@webtor/platform-sdk-js";
-const parseTorrent = require("parse-torrent");
 
 function DisplayMovies({ movieData }) {
   const [selectedMovieHash, setSelectedMovieHash] = useState("");
@@ -13,45 +11,6 @@ function DisplayMovies({ movieData }) {
     )[0]?.hash;
     setSelectedMovieHash(maxPeerHash);
     console.log(maxPeerHash);
-  };
-  const getStreamUrls = async () => {
-    const sdk = webtor({
-      apiUrl: "http://127.0.0.1:3000", // you should change this
-    });
-
-    let torrent = parseTorrent(
-      "magnet:?xt=urn:btih:31F39E3AFE7C418EA6C10EA1B650E7D6D00680CF&dn=&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Fopentor.org%3A2710&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969"
-    );
-
-    try {
-      torrent = await sdk.torrent.pull(torrent.infoHash);
-    } catch (e) {
-      console.log(e);
-      torrent = null;
-    }
-
-    if (!torrent) {
-      torrent = await sdk.magnet.fetchTorrent(
-        "magnet:?xt=urn:btih:31F39E3AFE7C418EA6C10EA1B650E7D6D00680CF&dn=&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Fopentor.org%3A2710&tr=udp%3A%2F%2Ftracker.ccc.de%3A80&tr=udp%3A%2F%2Ftracker.blackunicorn.xyz%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969"
-      );
-    }
-
-    const expire = 60 * 60 * 24;
-
-    await sdk.torrent.push(torrent, expire);
-
-    const seeder = sdk.seeder.get("31F39E3AFE7C418EA6C10EA1B650E7D6D00680CF");
-
-    let filePath = null;
-
-    for (const f of torrent.files) {
-      if (sdk.util.getMediaType(f.path) == "video") {
-        filePath = f.path;
-      }
-    }
-
-    const url = await seeder.streamUrl(filePath);
-    console.log(url);
   };
   return (
     <>
@@ -95,7 +54,6 @@ function DisplayMovies({ movieData }) {
             })}
           </div>
           {selectedMovieHash && <Player></Player>}
-          <button onClick={getStreamUrls}>webtor stuff</button>
         </>
       ) : (
         <></>
