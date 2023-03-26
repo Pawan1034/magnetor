@@ -1,6 +1,6 @@
 # Stream/download movies with Magnetor
 
-This project was created with [React](https://react.dev/), [tailwindcss](https://tailwindcss.com/) [yts API][https://yts.mx/].
+This project was created with [React](https://react.dev/), [tailwindcss](https://tailwindcss.com/) [yts API](https://yts.mx/).
 
 ## Available Scripts
 
