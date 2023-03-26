@@ -19,3 +19,5 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ![Home](./public/magnetor-home.png)
+![Home Responsive](./public/home-res.png)
+![Search](./public/search.png)
