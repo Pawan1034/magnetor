@@ -1,24 +1,12 @@
-import './App.css';
-import GetMovies from './GetMovies';
-import { useState } from 'react';
-
+import NavBar from "./components/NavBar";
+import HomePage from "./components/Body";
+import "./App.css";
 function App() {
-  const [searchTerm,setSearchTerm ]= useState('')
-  const [showMovies,setShowMovies ]= useState(false)
-  console.log(showMovies,searchTerm)
   return (
-    <div className="App">
-      <input type="text" placeholder="Enter the movie name" value={searchTerm} onChange={(e)=>{
-        setSearchTerm(e.target.value)
-        setShowMovies(false)
-        }}/>
-      <button onClick={()=>{
-        setSearchTerm(searchTerm)
-        setShowMovies(true)
-        }}>Search</button>
-      {showMovies?<GetMovies searchTerm={searchTerm}/>:<></>}
+    <div className="bg-gradient-to-r from-primary-500 to-gray-100 h-screen">
+      <NavBar />
+      <HomePage />
     </div>
   );
 }
-
 export default App;
